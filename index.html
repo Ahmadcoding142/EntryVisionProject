@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>EntryVision - Home</title>
   <link rel="icon" href="data:,">
   <!-- Google Fonts: Poppins -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-    rel="stylesheet"
-  >
-  <!-- Font Awesome for icons (edit, trash) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -17,161 +14,132 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
-
   <style>
-    /* BASIC RESET & GLOBAL STYLES */
+    /* CSS Variables */
+    :root {
+      --primary: #4B0082;         /* Purple */
+      --background-dark: #000000; /* Black */
+      --overlay-color: rgba(0, 0, 0, 0.45);
+      --nav-bg: rgba(0, 0, 0, 0.75);
+      --transition: 0.3s ease;
+    }
+    /* BASIC RESET */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    html, body {
-      height: 100%;
+    html {
+      scroll-behavior: smooth;
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #000000, #4B0082); /* Black-to-purple gradient */
-      color: #f1f1f1;
+      color: #fff;
+      /* Underlay: black-to-purple gradient + GIF */
+      background:
+        linear-gradient(135deg, var(--background-dark), var(--primary)),
+        url('/images/facetrack.gif') no-repeat center center / cover;
+      background-size: auto, 108rem auto;   
+      background-blend-mode: overlay; /* merges the gradient & GIF */
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
 
     /* NAVIGATION */
     nav {
       position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
-      display: flex;
-      align-items: center;
       padding: 1rem 2rem;
+      background: var(--nav-bg);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      transition: padding var(--transition), background var(--transition);
     }
-    nav .logo {
+    nav.shrink {
+      padding: 0.5rem 2rem;
+      background: rgba(0, 0, 0, 0.85);
+    }
+    .logo {
       font-weight: 700;
       font-size: 1.8rem;
+      letter-spacing: 0.5px;
     }
-    nav ul {
+    .nav-links {
       list-style: none;
       display: flex;
       gap: 1.5rem;
-      margin-left: auto;
     }
-    nav ul li a {
-      color: #f1f1f1;
+    .nav-links li a {
       text-decoration: none;
+      color: #fff;
       padding: 0.5rem 1rem;
       border-radius: 4px;
-      transition: background 0.3s ease;
+      transition: background var(--transition);
     }
-    nav ul li a:hover {
-      background: rgba(75, 0, 130, 0.7);
-    }
-    /* Hamburger (mobile) */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      margin-left: auto;
-    }
-    .hamburger span {
-      height: 3px;
-      width: 25px;
-      background: #f1f1f1;
-      margin-bottom: 5px;
-      border-radius: 2px;
-      transition: transform 0.3s ease;
-    }
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        position: absolute;
-        top: 70px;
-        left: 0;
-        padding: 1rem 0;
-      }
-      nav ul.active {
-        display: flex;
-      }
-      .hamburger {
-        display: flex;
-      }
+    .nav-links li a:hover {
+      background: rgba(255, 255, 255, 0.1);
     }
 
     /* HERO SECTION */
-    .hero {
+    header.hero {
+      position: relative;
       height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      position: relative;
-      background: linear-gradient(135deg, #000000, #4B0082);
+      justify-content: flex-start;
+      padding-left: 5%;
     }
-    .hero::after {
+    header.hero::before {
       content: "";
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--overlay-color); /* subtle dark overlay on top of GIF */
+      z-index: 1;
+      transition: background var(--transition);
     }
     .hero-content {
       position: relative;
       z-index: 2;
-      text-align: center;
-      animation: fadeIn 1.5s ease-out;
+      max-width: 600px;
+      text-align: left;
+      animation: slideIn 1s ease-out;
     }
     .hero-content h1 {
-      font-size: 3rem;
+      font-size: 2.8rem;
+      font-weight: 700;
       margin-bottom: 1rem;
+      line-height: 1.2;
     }
     .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: #ddd;
     }
-    .hero-content a {
-      padding: 0.8rem 2rem;
-      background: rgba(75, 0, 130, 0.8);
-      color: #fff;
-      border-radius: 30px;
-      text-decoration: none;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-    .hero-content a:hover {
-      background: rgba(75, 0, 130, 1);
-      transform: scale(1.05);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* MAIN CONTAINER */
-    main {
-      padding: 3rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      animation: fadeIn 1s ease-out;
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     /* CAMERA SECTION */
-    #camera-section {
-      background: rgba(0, 0, 0, 0.8);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    section#camera {
+      padding: 100px 2rem 60px;
+      min-height: 80vh;
+      position: relative;
+      background: rgba(0, 0, 0, 0.5);
     }
-    #camera-section h2 {
+    section#camera h2 {
+      text-align: center;
       margin-bottom: 1rem;
-      font-size: 1.8rem;
-      letter-spacing: 0.5px;
+      font-size: 2rem;
     }
     .video-container {
       width: 480px;
@@ -196,8 +164,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: #dcdcdc;
       font-size: 1.2rem;
+      color: #dcdcdc;
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
@@ -206,6 +174,8 @@
       100% { opacity: 1; }
     }
     #scan-button {
+      display: block;
+      margin: 1.5rem auto 0;
       background: rgba(75, 0, 130, 0.8);
       color: #fff;
       padding: 0.8rem 2rem;
@@ -213,102 +183,58 @@
       border-radius: 30px;
       cursor: pointer;
       font-size: 1rem;
-      margin-top: 1.5rem;
-      transition: background 0.3s ease, transform 0.3s ease;
+      transition: background var(--transition), transform var(--transition);
     }
     #scan-button:hover {
       background: rgba(75, 0, 130, 1);
       transform: scale(1.05);
     }
 
-    /* MODAL OVERLAY FOR SCAN */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1100;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.5s ease-out;
-    }
-    .modal.active {
-      display: flex;
-    }
-    .modal-content {
-      background: #222;
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
-      width: 90%;
-      max-width: 400px;
-    }
-    .modal-content h3 {
-      margin-bottom: 1rem;
-    }
-    .spinner {
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top: 4px solid #fff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     /* MANAGE RECOGNIZED FACES SECTION */
-    #recognized-individuals {
+    section#recognized {
+      padding: 100px 2rem 60px;
       background: rgba(0, 0, 0, 0.8);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      margin-bottom: 2rem;
-      animation: fadeIn 1s ease-out;
-      color: #fff;
-      text-align: left;
     }
-    #recognized-individuals h2 {
-      font-size: 1.8rem;
+    section#recognized h2 {
+      text-align: center;
       margin-bottom: 0.5rem;
+      font-size: 2rem;
     }
     .section-description {
-      font-size: 0.95rem;
+      text-align: center;
+      font-size: 1rem;
       color: #ccc;
-      margin-bottom: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
     }
-    .individual-card {
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .card {
       background: #222;
       border-radius: 8px;
       padding: 1rem;
-      margin-bottom: 1rem;
+      width: 220px;
       position: relative;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .individual-card:hover {
+    .card:hover {
       transform: translateY(-3px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
-    .individual-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .individual-header h3 {
-      margin: 0;
+    .card h3 {
       font-size: 1.2rem;
       font-weight: 600;
+      margin-bottom: 0.3rem;
     }
-    /* Removed .status styles and text (Active/Restricted) */
-    .role,
-    .last-access {
-      margin: 0.2rem 0;
+    .card p {
       font-size: 0.9rem;
       color: #bbb;
+      margin-bottom: 0.5rem;
     }
     .card-actions {
       position: absolute;
@@ -317,154 +243,115 @@
       display: flex;
       gap: 0.5rem;
     }
-    .edit-btn,
-    .delete-btn {
+    .card-actions button {
       background: transparent;
       border: none;
       color: #ccc;
       cursor: pointer;
       font-size: 1.1rem;
-      transition: color 0.3s ease;
+      transition: color var(--transition);
     }
-    .edit-btn:hover,
-    .delete-btn:hover {
+    .card-actions button:hover {
       color: #fff;
     }
 
     /* FOOTER */
     footer {
       text-align: center;
-      padding: 1.5rem;
-      color: #dcdcdc;
-      margin-top: 3rem;
+      padding: 1rem;
+      background: #111;
+      color: #999;
       font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
   <!-- NAVIGATION -->
-  <nav>
+  <nav id="navbar">
     <div class="logo">EntryVision</div>
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <ul id="nav-links">
+    <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="what.html">What is EntryVision</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="what-is-entryvision.html">What is EntryVision?</a></li>
     </ul>
   </nav>
 
   <!-- HERO SECTION -->
-  <section class="hero">
+  <header class="hero">
     <div class="hero-content">
-      <h1>Welcome to EntryVision</h1>
-      <p>Secure access with advanced facial recognition.</p>
-      <a href="#camera-section">Get Started</a>
+      <h1>What is EntryVision?</h1>
+      <p>
+        EntryVision is an innovative door lock solution that uses advanced facial recognition 
+        to provide secure and seamless access. Protect your premises with our cutting-edge technology.
+      </p>
     </div>
+  </header>
+
+  <!-- CAMERA SECTION -->
+  <section id="camera">
+    <h2>Facial Recognition</h2>
+    <div class="video-container">
+      <video id="video" autoplay muted playsinline></video>
+      <div class="placeholder-text">Position your face in the frame</div>
+    </div>
+    <button id="scan-button">Scan Face to Unlock</button>
   </section>
 
-  <main>
-    <!-- CAMERA SECTION -->
-    <section id="camera-section">
-      <h2>Facial Recognition</h2>
-      <div class="video-container">
-        <video id="video" autoplay muted playsinline></video>
-        <div class="placeholder-text">Position your face in the frame</div>
-      </div>
-      <button id="scan-button">Scan Face to Unlock</button>
-    </section>
-
-    <!-- MANAGE RECOGNIZED FACES SECTION -->
-    <section id="recognized-individuals">
-      <h2>Manage Recognized Faces</h2>
-      <p class="section-description">
-        Add individuals, set access permissions, and monitor entry logs all in one place.
-        Keep your premises secure while ensuring convenient access for authorized personnel.
-      </p>
-
-      <!-- Individual Card 1 -->
-      <div class="individual-card">
-        <div class="individual-header">
-          <h3>Ajay Kular</h3>
-        </div>
-        <p class="role">Trusted face</p>
-        <p class="last-access">Last access: 2h ago</p>
+  <!-- MANAGE RECOGNIZED FACES SECTION -->
+  <section id="recognized">
+    <h2>Manage Recognized Faces</h2>
+    <p class="section-description">
+      Monitor and manage authorized individuals. Keep your security system updated with real-time access logs.
+    </p>
+    <div class="card-container">
+      <!-- Example Cards -->
+      <div class="card">
+        <h3>Ajay Kular</h3>
+        <p>Trusted Face</p>
+        <p>Last access: 2h ago</p>
         <div class="card-actions">
-          <button class="edit-btn" title="Edit">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="delete-btn" title="Remove">
-            <i class="fas fa-trash"></i>
-          </button>
+          <button title="Edit"><i class="fas fa-edit"></i></button>
+          <button title="Remove"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-
-      <!-- Individual Card 2 -->
-      <div class="individual-card">
-        <div class="individual-header">
-          <h3>Ahmad Sultan</h3>
-        </div>
-        <p class="role">Trusted Face</p>
-        <p class="last-access">Last access: 2h ago</p>
+      <div class="card">
+        <h3>Ahmad Sultan</h3>
+        <p>Employee</p>
+        <p>Last access: 2h ago</p>
         <div class="card-actions">
-          <button class="edit-btn" title="Edit">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="delete-btn" title="Remove">
-            <i class="fas fa-trash"></i>
-          </button>
+          <button title="Edit"><i class="fas fa-edit"></i></button>
+          <button title="Remove"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-
-      <!-- Individual Card 3 -->
-      <div class="individual-card">
-        <div class="individual-header">
-          <h3>Organizer</h3>
-        </div>
-        <p class="role">Trusted Face</p>
-        <p class="last-access">Last access: 3h ago</p>
+      <div class="card">
+        <h3>Organizer</h3>
+        <p>Contractor</p>
+        <p>Last access: 3h ago</p>
         <div class="card-actions">
-          <button class="edit-btn" title="Edit">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button class="delete-btn" title="Remove">
-            <i class="fas fa-trash"></i>
-          </button>
+          <button title="Edit"><i class="fas fa-edit"></i></button>
+          <button title="Remove"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
     &copy; <span id="year"></span> EntryVision. All rights reserved.
   </footer>
 
-  <!-- MODAL OVERLAY FOR SCANNING -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <h3>Scanning...</h3>
-      <div class="spinner"></div>
-      <p>Please wait while we verify your face.</p>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT -->
   <script>
-    // Set current year
+    // Set footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Responsive Navigation Toggle
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('nav-links');
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+    // Shrink navbar on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) { nav.classList.add('shrink'); }
+      else { nav.classList.remove('shrink'); }
     });
 
-    // Start Camera
+    // Start camera feed
     async function startCamera() {
       const video = document.getElementById('video');
       try {
@@ -477,20 +364,10 @@
     }
     window.addEventListener('load', startCamera);
 
-    // Scan Button & Modal Simulation
-    const scanButton = document.getElementById('scan-button');
-    const modal = document.getElementById('modal');
-    scanButton.addEventListener('click', () => {
-      // Show modal with scanning animation
-      modal.classList.add('active');
-      // Simulate scanning delay
-      setTimeout(() => {
-        modal.classList.remove('active');
-        alert("Face recognized! Door unlocked.");
-      }, 3000);
+    // Simulate scan action
+    document.getElementById('scan-button').addEventListener('click', () => {
+      alert("Scanning face... (placeholder)\nFace recognized! Door unlocked.");
     });
   </script>
 </body>
 </html>
-
-f
